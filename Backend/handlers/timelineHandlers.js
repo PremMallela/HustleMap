@@ -14,20 +14,32 @@ export const getTimelineById = asyncHandler(async (req, res) => {
 
 // Create a new timeline event
 export const createTimeline = asyncHandler(async (req, res) => {
-  const {title, description, date } = req.body;
-  console.log(req.userId, title, description, date);
-  if (!userId || !title || !description || !date) {
+  const {title, description, period } = req.body;
+  const userId = req.user.id;
+
+  if (!userId || !title || !description || !period?.start || !period?.end) {
     return res.status(400).json({ message: "Please fill all fields " });
   }
 
-  const newEvent = await TimelineEvent.create({ 
-    userId: req.userId, 
-    title, 
-    description, 
-    date 
-  });
+  const startDate = new Date(period.start);
+    const endDate = new Date(period.end);
+    const today = new Date();
 
-  console.log("✅ Event Created:", newEvent);
+    if (startDate > today || endDate > today) {
+      return res.status(400).json({ message: "Period dates cannot be in the future" });
+    }
+
+    if (startDate > endDate) {
+      return res.status(400).json({ message: "Start date must be before end date" });
+    }
+
+    const newEvent = await TimelineEvent.create({
+      userId,
+      title,
+      description,
+      period: { start: startDate, end: endDate }
+    });
+
   res.status(201).json(newEvent);
 });
 
