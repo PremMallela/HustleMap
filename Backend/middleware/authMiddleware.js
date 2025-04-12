@@ -5,7 +5,8 @@ export const authorize = (req, res, next)=> {
   const token = req.cookies.token;
   
   if (!token) {
-    res.status(401).json({ message: "Not authorized, no token" });
+    console.log("No token found in cookies");
+    return res.status(401).json({ message: "Unauthorized, no token" });
   }
 
   try {

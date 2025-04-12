@@ -1,80 +1,105 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-
-console.log("Login component is being loaded");
+import { TextField, Button, Typography, Box, CircularProgress, Paper } from "@mui/material";
 
 const Login = () => {
-  console.log("Login component mounted");  
-  const [loginCredentials, setLoginCredentials] = useState({email: "", password: ""});
+  const [loginCredentials, setLoginCredentials] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const handleChange = (e)=>{
-    setLoginCredentials({...loginCredentials, [e.target.name]: e.target.value});
-  }
+  const handleChange = (e) => {
+    setLoginCredentials({ ...loginCredentials, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
     setLoading(true);
-  
+
     try {
-      await axios.post("http://localhost:5000/api/users/login", 
-        loginCredentials,
-        { withCredentials: true }
-      );
+      await axios.post("http://localhost:5000/api/users/login", loginCredentials, {
+        withCredentials: true,
+      });
       navigate("/profile");
     } catch (err) {
-      setErrorMessage("Invalid credentials. Please try again.");
+      setErrorMessage(`${err.response?.data?.message}, Please try again` || "Login failed");
     } finally {
       setLoading(false);
     }
-  }    
-  
+  };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-bold mb-4 text-gray-700">Login</h2>
-        {errorMessage && <p className="text-red-500 text-sm mb-2">{errorMessage}</p>}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Email</label>
-            <input 
-              type="email" 
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-sky-200 via-white to-blue-100">
+      <Paper
+        elevation={6}
+        sx={{
+          p: 4,
+          width: 400,
+          borderRadius: "20px",
+          backdropFilter: "blur(10px)",
+          background: "rgba(255, 255, 255, 0.2)",
+          border: "1px solid rgba(255, 255, 255, 0.3)",
+          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.1)",
+        }}
+      >
+        <Typography variant="h5" fontWeight="bold" color="primary" gutterBottom align="left">
+          Hustler Login
+        </Typography>
+
+        {errorMessage && (
+          <Typography variant="body2" color="error" align="center" mb={2}>
+            {errorMessage}
+          </Typography>
+        )}
+
+        <form onSubmit={handleSubmit}>
+          <Box mb={2}>
+            <TextField
+              label="Email"
               name="email"
-              placeholder="Enter your email" 
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={loginCredentials.email} 
+              fullWidth
+              value={loginCredentials.email}
               onChange={handleChange}
+              variant="outlined"
               required
             />
-          </div>
-          <div>
-            <label className="block text-gray-600 text-sm font-medium mb-1">Password</label>
-            <input 
-              type="password" 
-              name ="password"
-              placeholder="Enter your password" 
-              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
-              value={loginCredentials.password} 
+          </Box>
+
+          <Box mb={2}>
+            <TextField
+              label="Password"
+              name="password"
+              type="password"
+              fullWidth
+              value={loginCredentials.password}
               onChange={handleChange}
+              variant="outlined"
               required
             />
-          </div>
-          <button 
-            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200"
+          </Box>
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            size="large"
+            sx={{ borderRadius: "30px", textTransform: "none", py: 1.5 }}
             disabled={loading}
           >
-            {loading ? "Logging in..." : "Login"}
-          </button>
+            {loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
+          </Button>
         </form>
-        <p className="text-gray-600 text-sm mt-4 text-center">
-          Don't have an account? <Link to="/signup" className="text-blue-500">Sign up</Link>
-        </p>
-      </div>
+
+        <Typography variant="body2" align="center" mt={3} color="text.secondary">
+          Don’t have an account?{" "}
+          <Link to="/signup" className="text-blue-600 hover:underline font-medium">
+            Sign up
+          </Link>
+        </Typography>
+      </Paper>
     </div>
   );
 };

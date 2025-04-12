@@ -1,18 +1,26 @@
 import User from "../data-model/User.js";
 import { signToken } from "../utils/jwt.js";
 import bcrypt from "bcryptjs";
+import asyncHandler from "../utils/asyncHandler.js";
 
-export const register = async (req, res) => {
+export const register = asyncHandler(async (req, res) => {
 
-  const { name, email, password } = req.body;
-  if (!name || !email || !password) {
+  const { name, email, password, githubUsername, leetcodeUsername} = req.body;
+  if (!name || !email || !password || !githubUsername || !leetcodeUsername) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
   const existingUser = await User.findOne({ email });
-  if (existingUser) return res.status(400).json({ message: "Email already exists" });
+  if (existingUser) return res.status(409).json({ message: "Email already exists" });
+
+  const existingGithubUser = await User.findOne({ githubUsername });
+  if (existingGithubUser) return res.status(409).json({ message: "Github username already exists" });
+
+  const existingLeetcodeUser = await User.findOne({ leetcodeUsername });
+  if (existingLeetcodeUser) return res.status(409).json({ message: "Leetcode username already exists" });
 
   const hashedPassword = await bcrypt.hash(password, 10);
+  
   const user = await User.create({ ...req.body, password: hashedPassword });
 
   const token = signToken({ id: user._id });
@@ -20,15 +28,15 @@ export const register = async (req, res) => {
   res.cookie("token", token, {
       httpOnly: true,
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000, 
+      maxAge: 1 * 24 * 60 * 60 * 1000, 
     })
     .status(201)
     .json({ message: "User registered successfully" });
-};
+});
 
 
 
-export const login = async (req, res) => {
+export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -43,8 +51,8 @@ export const login = async (req, res) => {
   res.cookie("token", token, {
       httpOnly: false,
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: 1 * 24 * 60 * 60 * 1000,
     })
     .status(200)
     .json({ message: "Login successful" });
-};
+});
