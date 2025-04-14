@@ -38,13 +38,13 @@ const LeetCodeStats = () => {
 
   if (loading) return <LinearProgress sx={{ mt: 4 }} />;
 
+  if (error) return <Alert severity="error" sx={{ textAlign: "center" }}>{error}</Alert>;
+
+  const { profile , username ,submitStats } = stats;
+
   return (
     <Container maxWidth="md" sx={{ mt: 4 }}>
-      {error ? (
-        <Alert severity="error" sx={{ textAlign: "center" }}>
-          {error}
-        </Alert>
-      ) : stats ? (
+      { stats ? (
         <Card
           elevation={4}
           sx={{
@@ -69,7 +69,7 @@ const LeetCodeStats = () => {
             }}
           >
             <Avatar
-              src={stats.profile.userAvatar}
+              src={profile.userAvatar}
               alt="Avatar"
               sx={{
                 width: 80,
@@ -79,23 +79,23 @@ const LeetCodeStats = () => {
             />
             <Box>
               <Typography variant="h5" fontWeight={700}>
-                {stats.profile.realName}
+                {profile.realName}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                @{stats.username}
+                @{username}
               </Typography>
               <Typography variant="body2" color="primary">
-                {stats.profile.countryName}
+                {profile.countryName}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                Ranking: #{stats.profile.ranking}
+                Ranking: #{profile.ranking}
               </Typography>
             </Box>
           </Box>
 
           {/* Submission Stats */}
           <Grid container spacing={2} mt={3}>
-            {stats.submitStats.acSubmissionNum.map((item) => {
+            {submitStats.acSubmissionNum.map((item) => {
               const colors = {
                 Easy: { bg: "#d1fae5", text: "#065f46" },
                 Medium: { bg: "#fef9c3", text: "#92400e" },

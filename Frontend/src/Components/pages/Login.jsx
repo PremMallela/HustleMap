@@ -22,11 +22,12 @@ const Login = () => {
       await axios.post("http://localhost:5000/api/users/login", loginCredentials, {
         withCredentials: true,
       });
-      navigate("/profile");
+      setTimeout(()=> {
+        setLoading(false);
+        navigate("/profile")}, 1500)
     } catch (err) {
-      setErrorMessage(`${err.response?.data?.message}, Please try again` || "Login failed");
-    } finally {
       setLoading(false);
+      setErrorMessage(`${err.response?.data?.message}, Please try again` || "Login failed");
     }
   };
 

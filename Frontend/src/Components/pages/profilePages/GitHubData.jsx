@@ -37,14 +37,13 @@ const GitHubData = () => {
 
   if (loading) return <LinearProgress sx={{ mt: 4 }} />;
 
-  if(githubData){
-     const { profile, repoNames, topLanguages } = githubData;
-  }
+  if (error) return <Alert severity="error" sx={{ textAlign: "center" }}>{error}</Alert>;
 
+  const { profile, repoNames, topLanguages } = githubData;
+  
 
   return (
     <Box sx={{ bgcolor: "#f0f2f5", minHeight: "100vh", py: 4, px: 2 }}>
-      {error ? <Alert severity="error" sx={{ textAlign: "center" }}>{error}</Alert> : githubData &&
       <Box sx={{ maxWidth: 1000, mx: "auto" }}>
        {/* Profile Card */}
         <Card sx={{ display: "flex", alignItems: "center", p: 3, mb: 4, borderRadius: 4, bgcolor: "#fff" }}>
@@ -97,7 +96,7 @@ const GitHubData = () => {
             </Grid>
           ))}
         </Grid>
-      </Box>}
+      </Box>
     </Box>
   );
 };

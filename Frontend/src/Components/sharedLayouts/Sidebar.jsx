@@ -1,16 +1,34 @@
-import { Link, useLocation } from "react-router-dom";
-import { Avatar, Drawer, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import { Link, useLocation ,useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Avatar, Drawer, List, ListItemButton, ListItemIcon, ListItemText,Button, CircularProgress } from "@mui/material";
 import { Person, Code, GitHub, BarChart } from "@mui/icons-material";
+import axios from "axios";
 
 const Sidebar = () => {
   const location = useLocation();
-  
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
   const menuItems = [
     { text: "Profile", path: "/profile", icon: <Person /> },
     { text: "LeetCode Data", path: "/profile/leetcode", icon: <Code /> },
     { text: "GitHub Data", path: "/profile/github", icon: <GitHub /> },
     { text: "Grit Evaluation", path: "/profile/grit", icon: <BarChart /> }
   ];
+
+  const handleLogout = async () => {
+    try {
+       await axios.get("http://localhost:5000/api/users/logout", 
+            {withCredentials: true}
+        )
+        setLoading(false);
+        setTimeout(( ) =>{
+           navigate("/login");
+          }, 1500);
+        
+    }catch (error) {
+        console.error("Logout failed:", error)
+    }
+}
   
   return (
     <Drawer 
@@ -53,6 +71,9 @@ const Sidebar = () => {
           </ListItemButton>
         ))}
       </List>
+              <Button variant="contained" color="primary" onClick={handleLogout} sx={{ marginTop: "auto", marginBottom: 2,width :"80%", borderRadius: 2 }}>
+                 {loading ? "logout": <CircularProgress size={24} color="inherit" />}
+              </Button>
     </Drawer>
   );
 };
