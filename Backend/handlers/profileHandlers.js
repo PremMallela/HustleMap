@@ -20,7 +20,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 
 export const saveUserProfile = asyncHandler(async (req, res) => {
   const userId = req.user.id;
-  const { hustlePeriod, lastJob, resignReason, roadmapLink } = req.body;
+  const { hustlePeriod, lastJob, resignReason } = req.body;
 
   let profile = await userProfile.findOne({ user: userId });
 
@@ -28,7 +28,6 @@ export const saveUserProfile = asyncHandler(async (req, res) => {
     profile.hustlePeriod = hustlePeriod;
     profile.lastJob = lastJob;
     profile.resignReason = resignReason;
-    profile.roadmapLink = roadmapLink;
 
     await profile.save();
     return res.status(200).json({ message: "Profile updated", profile });
@@ -38,7 +37,6 @@ export const saveUserProfile = asyncHandler(async (req, res) => {
       hustlePeriod,
       lastJob,
       resignReason,
-      roadmapLink,
     });
 
     return res.status(201).json({ message: "Profile created", profile: newProfile });

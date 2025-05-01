@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { TextField, Button, Typography, Box, Card, CardContent, Grid, Divider ,CircularProgress } from "@mui/material";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 const Profile = () => {
@@ -12,7 +12,6 @@ const Profile = () => {
     hustlePeriod: "",
     lastJob: "",
     resignReason: "",
-    roadmapLink: ""
   });
 
   const navigate = useNavigate();
@@ -83,9 +82,6 @@ const Profile = () => {
               <Grid span={12}>
                 <TextField fullWidth label="Reason for Resigning" name="resignReason" multiline rows={3} value={profileData.resignReason} onChange={handleChange} />
               </Grid>
-              <Grid span={12}>
-                <TextField fullWidth label="Roadmap Link" name="roadmapLink" value={profileData.roadmapLink} onChange={handleChange} />
-              </Grid>
               <Grid span={12} display="flex" justifyContent="center">
                 <Button variant="contained" color="primary" onClick={handleSave}>{isSaving?<CircularProgress size={24} color="inherit" />:"Save"}</Button>
               </Grid>
@@ -104,9 +100,9 @@ const Profile = () => {
               <Grid span={12}>
                 <Typography>
                   <strong>What I've Been Doing Since Then:</strong>{" "}
-                  {profileData.roadmapLink
-                    ? <a href={profileData.roadmapLink} target="_blank" rel="noopener noreferrer">View Roadmap</a>
-                    : "N/A"}
+                  <Link to="/hustleTimeline/display" style={{ color: "#1976d2", textDecoration: "underline" }}>
+      View My Hustle Timeline
+    </Link>
                 </Typography>
               </Grid>
               <Grid span={12} display="flex" justifyContent="center">

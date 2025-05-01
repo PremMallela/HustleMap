@@ -1,18 +1,36 @@
 import mongoose from "mongoose";
 
-const TimelineEventSchema = new mongoose.Schema(
+const EventSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  period: {
+    start: { type: Date, required: true },
+    end: { type: Date, required: true },
+  },
+  type: {
+    type: String,
+    enum: ["upskilling", "project", "struggle", "win"],
+    required: true,
+  },
+  media: { type: String, default: "" },
+});
+
+const TimelineSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, 
-    title: { type: String, required: true },
-    period: {
-      start: { type: Date, required: true },
-      end: { type: Date, required: true }
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      unique: true, 
     },
-    description: { type: String, required: true },
-    media: { type: String }, 
+    events: {
+      type: [EventSchema],
+      default: [],
+    },
   },
   { timestamps: true }
 );
 
-const TimelineEvent = mongoose.model("TimelineEvent", TimelineEventSchema,"timelineEvents");
-export default TimelineEvent;
+const Timeline = mongoose.model("Timeline", TimelineSchema, "events");
+
+export default Timeline;

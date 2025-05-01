@@ -1,27 +1,31 @@
-import TimelineEvent from "../data-model/TimeLineEvent.js";
+import Timeline from "../data-model/TimeLineEvent.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
-// Get all timeline events
-export const getTimelines = asyncHandler(async (req, res,next) => {
-  const events = await TimelineEvent.find();-
-  res.json(events);
+
+// Get a timeline
+export const getTimeline = asyncHandler(async (req, res) => {
+  const userId = req.user.id;
+  res.json(await Timeline.findOne({userId}));
 });
 
-// Get a specific event by ID
-export const getTimelineById = asyncHandler(async (req, res) => {
-  res.json(await TimelineEvent.findById(req.params.id));
-});
-
-// Create a new timeline event
-export const createTimeline = asyncHandler(async (req, res) => {
-  const {title, description, period } = req.body;
+// Create & update a timeline event
+export const upsertEvents = asyncHandler(async (req, res) => {
+  const events = req.body.events;  
   const userId = req.user.id;
 
-  if (!userId || !title || !description || !period?.start || !period?.end) {
-    return res.status(400).json({ message: "Please fill all fields " });
+  if (!events || events.length === 0) {
+    return res.status(400).json({ message: "No events provided" });
   }
 
-  const startDate = new Date(period.start);
+  // ✅ Validate every event
+  for (const event of events) {
+    const { title, description, period, type } = event;
+
+    if (!title || !description || !period?.start || !period?.end || !type) {
+      return res.status(400).json({ message: "Please fill all fields in each event" });
+    }
+
+    const startDate = new Date(period.start);
     const endDate = new Date(period.end);
     const today = new Date();
 
@@ -32,24 +36,37 @@ export const createTimeline = asyncHandler(async (req, res) => {
     if (startDate > endDate) {
       return res.status(400).json({ message: "Start date must be before end date" });
     }
+  }
 
-    const newEvent = await TimelineEvent.create({
-      userId,
-      title,
-      description,
-      period: { start: startDate, end: endDate }
-    });
+  try {
+    const existingTimeline = await Timeline.findOne({ userId });
 
-  res.status(201).json(newEvent);
+    if (existingTimeline) {
+      existingTimeline.events = events;
+      await existingTimeline.save();
+      return res.status(201).json({ message: "Events updated" });
+    } else {
+      // ✅ Create new Timeline with events array
+      await Timeline.create({
+        userId,
+        events,
+      });
+      return res.status(201).json({ message: "Events created" });
+    }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Error upserting the events" });
+  }
 });
 
-// Update an event
-export const updateTimeline = asyncHandler(async (req, res) => {
-  res.json(await TimelineEvent.findByIdAndUpdate(req.params.id, req.body, { new: true }));
+
+// Update an event, this might be used when i want to edit an event seperately ,not on the timeline route on react app
+export const updateEvent = asyncHandler(async (req, res) => {
+  res.json(await TimelineEvent.findByIdAndUpdate(req.user.id, req.body, { new: true }));
 });
 
 // Delete an event
-export const deleteTimeline = asyncHandler(async (req, res) => {
-  await TimelineEvent.findByIdAndDelete(req.params.id);
+export const deleteEvent = asyncHandler(async (req, res) => {
+  await TimelineEvent.findByIdAndDelete(req.user.id);
   res.status(204).send();
 });

@@ -19,9 +19,6 @@ const userProfileSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    roadmapLink: {
-      type: String,
-    },
   },
   { timestamps: true }
 );

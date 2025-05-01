@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* index.css */
+body {
+  @apply bg-gradient-to-br from-[#f9fbe7] via-[#f0fdf4] to-[#e0f2f1] text-gray-900 min-h-screen;
+}
+
+  
+  
