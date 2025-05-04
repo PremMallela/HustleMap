@@ -6,7 +6,7 @@ import {
   Tooltip,
   useMediaQuery,
 } from "@mui/material";
-import axios from "axios";
+import axios from "../../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../sharedLayouts/Sidebar";
 
@@ -38,7 +38,7 @@ const TimelineDisplay = () => {
     const fetchTimeline = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/timeline",
+          "/api/timeline",
           { withCredentials: true }
         );
         setEvents(data.events || []);

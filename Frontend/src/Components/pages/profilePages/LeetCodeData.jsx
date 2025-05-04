@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../../utils/axiosInstance";
 import {
   Box,
   Avatar,
@@ -22,7 +22,7 @@ const LeetCodeStats = () => {
     const fetchStats = async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/profile/leetcode",
+          "/api/profile/leetcode",
           { withCredentials: true }
         );
         setStats(data);

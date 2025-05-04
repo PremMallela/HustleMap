@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../../../utils/axiosInstance";
+
 
 const Signup = () => {
   const [signupCredentials, setSignupCredentials] = useState({
@@ -39,7 +40,7 @@ const Signup = () => {
 
     try {
        await axios.post(
-        "http://localhost:5000/api/users/register",
+        "/api/users/register",
         { name, email, password, githubUsername ,leetcodeUsername },
         { withCredentials: true }
       );

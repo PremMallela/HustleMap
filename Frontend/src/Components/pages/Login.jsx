@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../../../utils/axiosInstance";
 import { TextField, Button, Typography, Box, CircularProgress, Paper } from "@mui/material";
 
 const Login = () => {
@@ -19,7 +19,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await axios.post("http://localhost:5000/api/users/login", loginCredentials, {
+      await axios.post("/api/users/login", loginCredentials, {
         withCredentials: true,
       });
       setTimeout(()=> {

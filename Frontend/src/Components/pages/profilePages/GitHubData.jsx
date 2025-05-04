@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../../../utils/axiosInstance";
 import {
   Avatar,
   Box,
@@ -22,7 +22,7 @@ const GitHubData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const {data} = await axios.get(`http://localhost:5000/api/profile/github`,{
+        const {data} = await axios.get(`/api/profile/github`,{
           withCredentials: true,
         });
         setGithubData(data);

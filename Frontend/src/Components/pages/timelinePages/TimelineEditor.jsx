@@ -13,8 +13,7 @@ import {
 } from "@mui/material";
 import { Plus } from "lucide-react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import axios from "axios";
-
+import axios from "../../../utils/axiosInstance";
 
 const defaultEvent = {
   title: "",
@@ -56,7 +55,7 @@ const Timeline = () => {
   useEffect(() => {
     const fetchTimeline = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/timeline", {
+        const response = await axios.get("/api/timeline", {
           withCredentials: true
         });
         const data = response.data?.events || defaultTimeline;
@@ -106,7 +105,7 @@ const Timeline = () => {
   const handleSaveTimeline = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/timeline",
+        "/api/timeline",
         { events: timelineEvents },
         { withCredentials: true }
       );

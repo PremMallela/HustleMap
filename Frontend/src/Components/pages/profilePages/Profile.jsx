@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { TextField, Button, Typography, Box, Card, CardContent, Grid, Divider ,CircularProgress } from "@mui/material";
-import axios from "axios";
+import axios from "../../utils/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import {generateHustleReportPDF} from "../../../utils/hustleTimelinePDFgenerator";
 import { IconButton, Tooltip } from "@mui/material";
@@ -24,7 +24,7 @@ const Profile = () => {
   const fetchProfile = async () => {
     console.log("fetching profile data");
     try {
-      const response = await axios.get("http://localhost:5000/api/profile", {
+      const response = await axios.get("/api/profile", {
         withCredentials: true
       });
       setProfileData(response.data);
@@ -54,7 +54,7 @@ const Profile = () => {
         return;
       }
       setIsSaving(true);
-      await axios.post("http://localhost:5000/api/profile/save", profileData, {
+      await axios.post("/api/profile/save", profileData, {
         withCredentials: true
       });
       setTimeout(() => {
@@ -71,7 +71,7 @@ const Profile = () => {
  
  const handleDownloadPDF = async () => {
   try {
-    const timelineRes = await axios.get("http://localhost:5000/api/timeline", {
+    const timelineRes = await axios.get("/api/timeline", {
       withCredentials: true
     });
 
