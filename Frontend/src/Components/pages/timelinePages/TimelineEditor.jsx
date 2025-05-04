@@ -8,12 +8,13 @@ import {
   MenuItem,
   Divider,
   Button,
-  LinearProgress
+  LinearProgress,
+  
 } from "@mui/material";
 import { Plus } from "lucide-react";
+import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 
-const MAX_EVENTS = 12;
 
 const defaultEvent = {
   title: "",
@@ -49,6 +50,7 @@ const Timeline = () => {
   const [timelineEvents, setTimelineEvents] = useState(defaultTimeline);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [deletingIndex, setDeletingIndex] = useState(null);
   const Navigate = useNavigate();
 
   useEffect(() => {
@@ -91,6 +93,16 @@ const Timeline = () => {
       setTimelineEvents([...timelineEvents, { ...defaultEvent }]);
   };
 
+  const deleteEvent = (index) => {
+    setDeletingIndex(index);
+     setTimeout(()=>{
+     const updated = [...timelineEvents];
+     updated.splice(index, 1);
+     setTimelineEvents(updated); 
+     setDeletingIndex(null);
+     },600)
+  }
+
   const handleSaveTimeline = async () => {
     try {
       const response = await axios.post(
@@ -117,7 +129,8 @@ const Timeline = () => {
 
       <Box className="relative border-l-4 border-gray-10 ml-6">
         {timelineEvents.map((event, index) => (
-          <Box key={index} className="mb-8 ml-4 relative">
+          <Box key={index} className={`mb-8 ml-4 relative transition-all duration-500 ease-in-out ${
+            deletingIndex === index ? "opacity-0 scale-90" : "opacity-100 scale-100"}`}>
             <Box
               className={`absolute pt-2 w-4 h-4 rounded-full -left-6 top-1.5 ${getColorByType(
                 event.type
@@ -200,7 +213,22 @@ const Timeline = () => {
                 <MenuItem value="win">Win</MenuItem>
               </TextField>
             </Box>
+            <IconButton 
+              color="error"
+              size="small"
+              onClick={() => deleteEvent(index)}
+              disabled={timelineEvents.length <= 1}
+              sx={{
+                position: "absolute",
+                top: "50%",
+                right: -100,
+                transform: "translateY(-50%)"
+              }}
+            >
+              <DeleteIcon/>
+           </IconButton>
           </Box>
+          
         ))}
 
           <Box className="flex justify-center mt-6">

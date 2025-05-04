@@ -2,6 +2,11 @@ import { useState, useEffect } from "react";
 import { TextField, Button, Typography, Box, Card, CardContent, Grid, Divider ,CircularProgress } from "@mui/material";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import {generateHustleReportPDF} from "../../../utils/hustleTimelinePDFgenerator";
+import { IconButton, Tooltip } from "@mui/material";
+import DownloadIcon from "@mui/icons-material/Download";
+
+
 
 
 const Profile = () => {
@@ -63,6 +68,26 @@ const Profile = () => {
       }
    }
  };
+ 
+ const handleDownloadPDF = async () => {
+  try {
+    const timelineRes = await axios.get("http://localhost:5000/api/timeline", {
+      withCredentials: true
+    });
+
+    const timelineEvents = timelineRes.data.events || [];
+    console.log("Timeline Events:", timelineEvents);
+
+    generateHustleReportPDF({
+      profile: profileData,
+      events: timelineEvents
+    });
+  } catch (error) {
+    console.error("Error generating PDF:", error);
+    alert("Could not generate PDF. Try again later.");
+  }
+};
+
 
   return !isloading && (
     <Box sx={{ maxWidth: 600, margin: "auto", padding: 3 }}>
@@ -107,6 +132,16 @@ const Profile = () => {
               </Grid>
               <Grid span={12} display="flex" justifyContent="center">
                 <Button variant="outlined" onClick={() => setIsEditing(true)}>Edit Profile</Button>
+              </Grid>
+              <Grid span={10} pl = "150px" display="flex" justifyContent="center">
+              <Tooltip title="Download Gap Timeline PDF">
+                <IconButton onClick={handleDownloadPDF} color="primary">
+                  <DownloadIcon />
+                  <Typography sx={{ fontSize: "0.8rem", marginLeft: "0.25rem" }}>
+                    Hustle Report
+                  </Typography>
+                </IconButton>
+              </Tooltip>
               </Grid>
             </Grid>
           )}

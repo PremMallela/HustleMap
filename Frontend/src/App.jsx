@@ -10,7 +10,7 @@ import "./index.css";
 function App() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/profile/*" element={<ProtectedRoute authUrl= "/profile"><ProfileRoutes /></ProtectedRoute>} />
       <Route path="/hustleTimeline/editor" element={<ProtectedRoute authUrl = "/timeline"><TimelineEditor/></ProtectedRoute>} />

@@ -17,7 +17,7 @@ export const upsertEvents = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "No events provided" });
   }
 
-  // ✅ Validate every event
+  //Validate every event
   for (const event of events) {
     const { title, description, period, type } = event;
 
@@ -46,7 +46,6 @@ export const upsertEvents = asyncHandler(async (req, res) => {
       await existingTimeline.save();
       return res.status(201).json({ message: "Events updated" });
     } else {
-      // ✅ Create new Timeline with events array
       await Timeline.create({
         userId,
         events,
@@ -59,14 +58,3 @@ export const upsertEvents = asyncHandler(async (req, res) => {
   }
 });
 
-
-// Update an event, this might be used when i want to edit an event seperately ,not on the timeline route on react app
-export const updateEvent = asyncHandler(async (req, res) => {
-  res.json(await TimelineEvent.findByIdAndUpdate(req.user.id, req.body, { new: true }));
-});
-
-// Delete an event
-export const deleteEvent = asyncHandler(async (req, res) => {
-  await TimelineEvent.findByIdAndDelete(req.user.id);
-  res.status(204).send();
-});
