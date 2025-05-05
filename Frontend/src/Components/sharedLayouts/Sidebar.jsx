@@ -2,7 +2,7 @@ import { Link, useLocation ,useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Avatar, Drawer, List, ListItemButton, ListItemIcon, ListItemText,Button, CircularProgress } from "@mui/material";
 import { Person, Code, GitHub, BarChart } from "@mui/icons-material";
-import axios from "../../utils/axiosInstance";
+import axios from "../../../utils/axiosInstance";
 
 const Sidebar = () => {
   const location = useLocation();

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { TextField, Button, Typography, Box, Card, CardContent, Grid, Divider ,CircularProgress } from "@mui/material";
-import axios from "../../utils/axiosInstance";
+import axios from "../../../utils/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 import {generateHustleReportPDF} from "../../../utils/hustleTimelinePDFgenerator";
 import { IconButton, Tooltip } from "@mui/material";
