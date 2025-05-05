@@ -6,7 +6,7 @@ import {
   Tooltip,
   useMediaQuery,
 } from "@mui/material";
-import axios from "../../../utils/axiosInstance";
+import axios from "../../utils/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../sharedLayouts/Sidebar";
 

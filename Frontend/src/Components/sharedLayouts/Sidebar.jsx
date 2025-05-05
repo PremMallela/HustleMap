@@ -2,7 +2,7 @@ import { Link, useLocation ,useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Avatar, Drawer, List, ListItemButton, ListItemIcon, ListItemText,Button, CircularProgress } from "@mui/material";
 import { Person, Code, GitHub, BarChart } from "@mui/icons-material";
-import axios from "axios";
+import axios from "../../utils/axiosInstance";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -17,7 +17,7 @@ const Sidebar = () => {
 
   const handleLogout = async () => {
     try {
-       await axios.get("http://localhost:5000/api/users/logout", 
+       await axios.get("/api/users/logout", 
             {withCredentials: true}
         )
         setLoading(false);
