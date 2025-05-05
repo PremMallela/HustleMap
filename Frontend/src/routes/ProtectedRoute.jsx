@@ -15,7 +15,7 @@ export const ProtectedRoute = ({ children, authUrl }) => {
         setIsAuthenticated(true);
       } catch (error) {
         if (error.response?.status === 401) {
-          navigate("/login");
+          navigate("/");
         }
         setIsAuthenticated(false);
        }
