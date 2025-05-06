@@ -60,9 +60,14 @@ export const getGithubData = asyncHandler(async (req, res) => {
   const profileUrl = `https://api.github.com/users/${username}`;
   const reposUrl = `https://api.github.com/users/${username}/repos?per_page=100`;
 
+  const headers = {
+    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    Accept: 'application/vnd.github+json',
+  };
+
   const [profileRes, reposRes] = await Promise.all([
-    axios.get(profileUrl),
-    axios.get(reposUrl),
+    axios.get(profileUrl,headers),
+    axios.get(reposUrl,headers),
   ]);
 
   console.log("✅ GitHub data fetched successfully.");
