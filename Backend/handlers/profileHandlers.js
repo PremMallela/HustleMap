@@ -66,8 +66,8 @@ export const getGithubData = asyncHandler(async (req, res) => {
   };
 
   const [profileRes, reposRes] = await Promise.all([
-    axios.get(profileUrl,headers),
-    axios.get(reposUrl,headers),
+    axios.get(profileUrl,{headers}),
+    axios.get(reposUrl,{headers}),
   ]);
 
   console.log("✅ GitHub data fetched successfully.");
