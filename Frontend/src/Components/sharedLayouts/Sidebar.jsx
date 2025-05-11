@@ -39,8 +39,9 @@ const Sidebar = () => {
         flexShrink: 0,
         '& .MuiDrawer-paper': {
           width: 250,
-          backgroundColor: "#f8f9fa",
+          backgroundColor:"rgb(182, 222, 204)",
           boxShadow: "2px 0px 5px rgba(0,0,0,0.1)",
+          borderRight: "2px solid rgba(30, 169, 49, 0.68)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

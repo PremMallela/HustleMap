@@ -43,7 +43,12 @@ const GitHubData = () => {
   
 
   return (
-    <Box sx={{ bgcolor: "#f0f2f5", minHeight: "100vh", py: 4, px: 2 }}>
+    <Box sx={{ bgcolor: "#f0f2f5", minHeight: "100vh",borderColor: "#2f3337",
+      borderWidth: 2.5,
+      borderStyle: "solid",
+      borderRadius: 2,
+      py: 4, px: 2 }}
+      >
       <Box sx={{ maxWidth: 1000, mx: "auto" }}>
        {/* Profile Card */}
         <Card sx={{ display: "flex", alignItems: "center", p: 3, mb: 4, borderRadius: 4, bgcolor: "#fff" }}>

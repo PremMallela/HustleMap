@@ -4,8 +4,14 @@
 
 /* index.css */
 body {
-  @apply bg-gradient-to-br from-[#f9fbe7] via-[#f0fdf4] to-[#e0f2f1] text-gray-900 min-h-screen;
+  background-color: #f1eee7;
 }
+@keyframes shine {
+  to {
+    background-position: -200% center;
+  }
+}
+
 
   
   
