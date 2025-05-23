@@ -27,7 +27,8 @@ const Login = () => {
         navigate("/profile")}, 1500)
     } catch (err) {
       setLoading(false);
-      setErrorMessage(`${err.response?.data?.message}, Please try again` || "Login failed");
+      console.log(err)
+      setErrorMessage(`${err?.message}, Please try again` || "Login failed");
     }
   };
 
