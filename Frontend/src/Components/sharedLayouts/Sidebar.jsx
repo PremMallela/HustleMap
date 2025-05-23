@@ -35,7 +35,7 @@ const Sidebar = () => {
       variant="permanent" 
       anchor="left" 
       sx={{
-        width: 250,
+       width: { xs: 60, sm: 200, md: 250 },
         flexShrink: 0,
         '& .MuiDrawer-paper': {
           width: 250,
@@ -72,7 +72,7 @@ const Sidebar = () => {
           </ListItemButton>
         ))}
       </List>
-              <Button variant="contained" color="primary" onClick={handleLogout} sx={{ marginTop: "auto", marginBottom: 2,width :"80%", borderRadius: 2 }}>
+              <Button variant="contained" onClick={handleLogout} sx={{ marginTop: "auto", marginBottom: 2,width :"80%", borderRadius: 2,backgroundColor: "#FFFBDE",color:"black" }}>
                  {loading ? "logout": <CircularProgress size={24} color="inherit" />}
               </Button>
     </Drawer>

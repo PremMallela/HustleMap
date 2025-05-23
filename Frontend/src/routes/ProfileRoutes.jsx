@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-import ProfileLayout from "../Components/layouts/ProfileLayout";
-import Profile from "../Components/pages/profilePages/Profile";
-import LeetCodeData from "../Components/pages/profilePages/LeetCodeData";
-import GitHubData from "../Components/pages/profilePages/GitHubData";
-import GritEvaluation from "../Components/pages/profilePages/GritEvaluation";
+import ProfileLayout from "../components/layouts/ProfileLayout";
+import Profile from "../components/pages/profilePages/Profile";
+import LeetCodeData from "../components/pages/profilePages/LeetCodeData";
+import GitHubData from "../components/pages/profilePages/GitHubData";
+import GritEvaluation from "../components/pages/profilePages/GritEvaluation";
 
 const ProfileRoutes = () => {
   return (

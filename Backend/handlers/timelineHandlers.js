@@ -1,4 +1,4 @@
-import Timeline from "../data-model/TimeLineEvent.js";
+import Timeline from "../models/TimeLineEvent.js";
 import asyncHandler from "../utils/asyncHandler.js";
 
 

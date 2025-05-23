@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
-import Login from "./Components/pages/Login";
-import Signup from "./Components/pages/Signup";
+import Login from "./components/pages/Login";
+import Signup from "./components/pages/Signup";
 import ProfileRoutes from "./routes/ProfileRoutes";
-import TimelineEditor from "./Components/pages/timelinePages/TimelineEditor";
+import TimelineEditor from "./components/pages/timelinePages/TimelineEditor";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
-import TimelineDisplay from "./Components/pages/timelinePages/TimelineDisplay";
-import LandingPage from "./Components/pages/LandingPage";
+import TimelineDisplay from "./components/pages/timelinePages/TimelineDisplay";
+import LandingPage from "./components/pages/LandingPage";
 import "./index.css";
 
 function App() {

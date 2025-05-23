@@ -2,9 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* index.css */
 body {
-  background-color: #f1eee7;
+  background-color: #FFFBDE;
 }
 @keyframes shine {
   to {

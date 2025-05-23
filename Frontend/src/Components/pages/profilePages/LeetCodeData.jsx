@@ -12,26 +12,11 @@ import {
   Alert,
   Container,
 } from "@mui/material";
+import { useFetch } from "../../../utils/hooks/useFetch";
 
 const LeetCodeStats = () => {
-  const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const { data } = await axios.get("/api/profile/leetcode", { withCredentials: true });
-        setStats(data);
-      } catch (err) {
-        setError(err.response?.data?.message || "Failed to fetch LeetCode stats");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStats();
-  }, []);
+  
+  const {data: stats ,loading, error} = useFetch("/api/profile/leetcode");
 
   if (loading) return <LinearProgress sx={{ mt: 4 }} />;
   if (error) return <Alert severity="error" sx={{ textAlign: "center" }}>{error}</Alert>;

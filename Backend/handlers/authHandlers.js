@@ -1,4 +1,4 @@
-import User from "../data-model/User.js";
+import User from "../models/User.js";
 import { signToken } from "../utils/jwt.js";
 import bcrypt from "bcryptjs";
 import asyncHandler from "../utils/asyncHandler.js";

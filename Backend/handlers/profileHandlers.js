@@ -1,18 +1,18 @@
-import userProfile from "../data-model/UserProfiles.js";
+import userProfile from "../models/UserProfile.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import axios from "axios";
-import User from "../data-model/User.js";
+import User from "../models/User.js";
 
 export const getUserProfile = asyncHandler(async (req, res) => {
   const userId = req.user.id;
+  console.log(userId);
 
   const profile = await userProfile.findOne({ user: userId });
 
-  if (!profile) {
-    const err = new Error("Profile not found for this user.");
-    err.status = 404;
-    throw err;
-  }
+  
+      if (!profile) {
+        return res.json({ hustlePeriod: "", lastJob: "", resignReason: "" });
+      }
 
   res.status(200).json(profile);
 });

@@ -1,57 +1,30 @@
-import { useEffect, useState } from "react";
-import axios from "../../../utils/axiosInstance";
-import {
-  Avatar,
-  Box,
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-  Chip,
-  Alert,
-  LinearProgress,
-  Tooltip,
-} from "@mui/material";
+import { Avatar, Box, Card, CardContent, Grid, Typography, Chip, Alert, LinearProgress, Tooltip } from "@mui/material";
 import { Star } from "@mui/icons-material";
+import { useFetch } from "../../../utils/hooks/useFetch"
 
 const GitHubData = () => {
-  const [githubData, setGithubData] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const {data} = await axios.get(`/api/profile/github`,{
-          withCredentials: true,
-        });
-        setGithubData(data);
-      } catch (err) {
-        setError(err.response?.data?.message || "Failed to fetch GitHub data");
-      }finally{
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
+  const { data: githubData, error, loading } = useFetch("/api/profile/github");
 
   if (loading) return <LinearProgress sx={{ mt: 4 }} />;
-
   if (error) return <Alert severity="error" sx={{ textAlign: "center" }}>{error}</Alert>;
 
   const { profile, repoNames, topLanguages } = githubData;
-  
 
   return (
-    <Box sx={{ bgcolor: "#f0f2f5", minHeight: "100vh",borderColor: "#2f3337",
+    <Box sx={{
+      bgcolor: "#f0f2f5",
+      minHeight: "100vh",
+      borderColor: "#2f3337",
       borderWidth: 2.5,
       borderStyle: "solid",
       borderRadius: 2,
-      py: 4, px: 2 }}
-      >
+      py: 4,
+      px: 2
+    }}>
       <Box sx={{ maxWidth: 1000, mx: "auto" }}>
-       {/* Profile Card */}
-        <Card sx={{ display: "flex", alignItems: "center", p: 3, mb: 4, borderRadius: 4, bgcolor: "#fff" }}>
+
+        {/* Profile Card */}
+        <Card sx={{ display: "flex", alignItems: "center", p: 3, mb: 4, borderRadius: 4, bgcolor: "primary" }}>
           <Avatar src={profile.avatar_url} alt={profile.name} sx={{ width: 100, height: 100, mr: 3 }} />
           <Box>
             <Typography variant="h5" fontWeight={600}>{profile.name}</Typography>
@@ -63,7 +36,7 @@ const GitHubData = () => {
         </Card>
 
         {/* Language Stats */}
-        <Card sx={{ p: 3, mb: 4, borderRadius: 4, bgcolor: "#fff" }}>
+        <Card sx={{ p: 3, mb: 4, borderRadius: 4, bgcolor: "background.default" }}>
           <Typography variant="h6" mb={2} fontWeight={600}>Languages Used</Typography>
           <Grid container spacing={2}>
             {Object.entries(topLanguages).map(([lang, count]) => (
@@ -79,9 +52,23 @@ const GitHubData = () => {
         <Grid container spacing={3}>
           {repoNames.map((repo) => (
             <Grid item xs={12} md={6} key={repo.name}>
-              <Card sx={{ borderRadius: 4, bgcolor: "#ffffff", boxShadow: 3 ,transition: '0.3s', '&:hover': { boxShadow: 10 } }}>
+              <Card sx={{
+                borderRadius: 4,
+                bgcolor: "#ffffff",
+                boxShadow: 3,
+                transition: '0.3s',
+                '&:hover': { boxShadow: 10 }
+              }}>
                 <CardContent>
-                  <Typography variant="h6" component="a" href={repo.html_url} target="_blank" rel="noopener noreferrer" sx={{ textDecoration: "none", color: "#1976d2" }}>
+                  <Typography
+                    variant="h6"
+                    color="primary"
+                    component="a"
+                    href={repo.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ textDecoration: "none" }}
+                  >
                     {repo.name}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" mt={1}>

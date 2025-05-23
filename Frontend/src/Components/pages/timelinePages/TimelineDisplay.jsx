@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useThemeColors } from "../../../utils/hooks/useThemeColors";
 import {
   Box,
   Typography,
@@ -116,17 +117,19 @@ const SortableEvent = ({ event, isMobile }) => {
 const TimelineDisplay = () => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error,setError] = useState(null);
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width:600px)");
   const sensors = useSensors(useSensor(PointerSensor));
+  const {primary} = useThemeColors();
 
   useEffect(() => {
     const fetchTimeline = async () => {
       try {
         const { data } = await axios.get("/api/timeline", { withCredentials: true });
-        setEvents(data.events || []);
+        setEvents(data?.events || []);  
       } catch (error) {
-        console.error("Error fetching timeline:", error);
+        setError(error)
       } finally {
         setLoading(false);
       }
@@ -134,15 +137,16 @@ const TimelineDisplay = () => {
 
     fetchTimeline();
   }, []);
+  
 
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
+  const handleDragEnd = (e) => {
+    const { active, over } = e;
     if (active.id !== over.id) {
-      const oldIndex = events.findIndex((e) => e._id === active.id);
-      const newIndex = events.findIndex((e) => e._id === over.id);
+      const oldIndex = events.findIndex((event) => event._id === active.id);
+      const newIndex = events.findIndex((event) => event._id === over.id);
       const updatedEvents = arrayMove(events, oldIndex, newIndex);
       setEvents(updatedEvents);
-      // axios.post("/api/timeline/reorder", { updatedEvents })
+      axios.post("/api/timeline", {events: updatedEvents})
     }
   };
 
@@ -153,6 +157,16 @@ const TimelineDisplay = () => {
       </Box>
     );
   }
+
+   if (error) {
+      return (
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+          <Alert severity="error">
+            {error || "Something went wrong while fetching the HustleTimeline."}
+          </Alert>
+        </Box>
+      );
+    }
 
   if (events.length === 0) {
     return (
@@ -171,7 +185,7 @@ const TimelineDisplay = () => {
           <button
             onClick={() => navigate('/hustleTimeline/editor')}
             style={{
-              background: '#3B82F6',
+              background:primary,
               color: '#fff',
               padding: '10px 20px',
               border: 'none',
@@ -189,6 +203,7 @@ const TimelineDisplay = () => {
 
   return (
     <>
+    
       <Sidebar />
       <Box p={{ xs: 2, md: 4 }} position="relative" sx={{ ml: { xs: 0, md: '240px' } }}>
         <Typography
@@ -241,7 +256,7 @@ const TimelineDisplay = () => {
           <button
             onClick={() => navigate('/hustleTimeline/editor')}
             style={{
-              background: '#3B82F6',
+              background: '#129990',
               color: '#fff',
               padding: '10px 20px',
               border: 'none',

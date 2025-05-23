@@ -25,7 +25,7 @@ import Logo from '../../../src/assets/hm-logo.avif';
 const colors = {
   primary: '#4caf50', 
   primaryLight: '#80e27e',
-  primaryDark: '#087f23',
+  primaryDark: '#129990',
   secondary: '#26a69a', 
   background: '#f0f0f0',
   text: 'text-gray-900',
@@ -33,11 +33,11 @@ const colors = {
   darkBackground: '#1b5e20',
 };
 
-function LandingPage() {
+const LandingPage =()=> {
   return (
     <Box className="min-h-screen">
       {/* Header/Navbar */}
-      <Box position="static">
+      <Box>
        <Toolbar className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         <img src={Logo} alt="HustleMap" style={{height: '4rem', objectFit: 'contain' }} />
         <Typography
@@ -83,10 +83,10 @@ function LandingPage() {
           className={`pt-16 pb-40`}
           sx={{
             backgroundImage: 'url("https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80")',
-            backgroundSize: 'cover', // ← Changed
+            backgroundSize: 'cover', 
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
-            minHeight: '100vh', // Optional: full screen height
+            minHeight: '100vh', 
           }}
       >
 

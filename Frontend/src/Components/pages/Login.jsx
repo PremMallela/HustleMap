@@ -45,7 +45,7 @@ const Login = () => {
           boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.1)",
         }}
       >
-        <Typography variant="h5" fontWeight="bold" color="primary" gutterBottom align="left">
+        <Typography variant="h5" fontWeight="bold" color="#129990" gutterBottom align="left">
           Hustler Login
         </Typography>
 
@@ -82,21 +82,30 @@ const Login = () => {
           </Box>
 
           <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            size="large"
-            sx={{ borderRadius: "30px", textTransform: "none", py: 1.5 }}
-            disabled={loading}
-          >
+              type="submit"
+              fullWidth
+              variant="contained"
+              size="large"
+              sx={{
+                backgroundColor: "#129990",
+                color: "#fff", // adjust for contrast
+                borderRadius: "30px",
+                textTransform: "none",
+                py: 1.5,
+                '&:hover': {
+                  backgroundColor: "#e6e0d9" // slightly darker shade on hover
+                }
+              }}
+              disabled={loading}
+            >
             {loading ? <CircularProgress size={24} color="inherit" /> : "Login"}
           </Button>
+
         </form>
 
         <Typography variant="body2" align="center" mt={3} color="text.secondary">
           Don’t have an account?{" "}
-          <Link to="/signup" className="text-blue-600 hover:underline font-medium">
+          <Link to="/signup" className="text-[#129990] hover:underline font-medium">
             Sign up
           </Link>
         </Typography>
