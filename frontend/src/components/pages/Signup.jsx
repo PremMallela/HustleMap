@@ -49,7 +49,7 @@ const Signup = () => {
       );
       navigate("/login");
     } catch (error) {
-      setErrorMessage(`${error?.message || "Signup failed"}. Please try again.`);
+      setErrorMessage(`${error?.response?.data?.message || "Signup failed"}. Please try again.`);
     } finally {
       setLoading(false);
     }

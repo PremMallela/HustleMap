@@ -113,7 +113,7 @@ const Timeline = () => {
       Navigate("/hustleTimeline/display");
     } catch (error) {
       console.log(error);
-      setError(error?.message || "Error saving timeline");
+      setError(error?.response?.data?.message|| "Error saving timeline");
     }
   }
 
