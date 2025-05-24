@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/pages/Login";
 import Signup from "./components/pages/Signup";
-import ProfileRoutes from "./routes/ProfileRoutes";
+import ProfileRoutes from "./routes/ProfileRoute";
 import TimelineEditor from "./components/pages/timelinePages/TimelineEditor";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import TimelineDisplay from "./components/pages/timelinePages/TimelineDisplay";
