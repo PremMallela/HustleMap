@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useThemeColors } from "../../../utils/hooks/useThemeColors";
+import { useUniformTheme } from "../../../utils/hooks/useUniformTheme";
 import {
   Box,
   Typography,
@@ -121,7 +121,7 @@ const TimelineDisplay = () => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width:600px)");
   const sensors = useSensors(useSensor(PointerSensor));
-  const {primary} = useThemeColors();
+  const {primary} = useUniformTheme();
 
   useEffect(() => {
     const fetchTimeline = async () => {

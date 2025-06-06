@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "../../utils/axiosInstance";
-import {useThemeColors} from "../../utils/hooks/useThemeColors";
+import {useUniformTheme} from "../../utils/hooks/useUniformTheme";
 
 
 const Signup = () => {
@@ -12,7 +12,7 @@ const Signup = () => {
     githubUsername: "",
     leetcodeUsername: "",
   });
- const { primary, background } = useThemeColors();
+ const { background } = useUniformTheme();
 
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);

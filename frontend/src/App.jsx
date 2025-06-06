@@ -14,9 +14,15 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />      
       <Route path="/signup" element={<Signup />} />
-      <Route path="/profile/*" element={<ProtectedRoute authUrl= "/profile"><ProfileRoutes /></ProtectedRoute>} />
-      <Route path="/hustleTimeline/editor" element={<ProtectedRoute authUrl = "/timeline"><TimelineEditor/></ProtectedRoute>} />
-      <Route path="/hustleTimeline/display" element={<ProtectedRoute authUrl = "/timeline"><TimelineDisplay/></ProtectedRoute>} />
+
+      <Route element ={<ProtectedRoute/>}>
+          <Route path="/profile/*" element={<ProfileRoutes />} />
+          <Route path="/hustleTimeline/editor" element={<TimelineEditor/>} />
+          <Route path="/hustleTimeline/display" element={<TimelineDisplay/>} />
+      </Route>
+
+      <Route path="*" element={<LandingPage />} />
+     
     </Routes>
   );
 }

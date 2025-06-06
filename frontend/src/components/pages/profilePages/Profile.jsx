@@ -31,7 +31,6 @@ const Profile = () => {
   const [isError, setIsError] = useState(null);
 
   const navigate = useNavigate();
-  console.log("hi")
   const { data, loading, error } = useFetch("/api/profile");
    
   useEffect(() => {
@@ -198,7 +197,7 @@ const Profile = () => {
                   Edit Profile
                 </Button>
               </Grid>
-              <Grid item xs={12} sx={{ textAlign: "center", mt: 1 }}>
+              <Grid item xs={12} sx={{ textAlign: "center", mt: 1, ml :20 }}>
                 <Tooltip title="Download Gap Timeline PDF">
                   <IconButton onClick={handleDownloadPDF} color="primary">
                     <DownloadIcon />

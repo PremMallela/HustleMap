@@ -1,27 +1,21 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../utils/axiosInstance"; 
+import { useAuthContext } from "../utils/hooks/useAuthContext";
+import { LinearProgress } from "@mui/material";
+import { Outlet } from "react-router-dom";
 
-export const ProtectedRoute = ({ children, authUrl }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+export const ProtectedRoute = () => {
+  const {auth} = useAuthContext();
   const navigate = useNavigate();
+  console.log(auth)
+   useEffect(() => {
+    if (auth.status === "unauthenticated") {
+      navigate("/login");
+    }
+  }, [auth.status, navigate]);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await axios.get(`/api${authUrl}`, {
-          withCredentials: true,
-        });
-        setIsAuthenticated(true);
-      } catch (error) {
-        if (error.response?.status === 401) {
-          navigate("/");
-        }
-        setIsAuthenticated(false);
-       }
-    };
-    checkAuth();
-  }, []);
-
-  return isAuthenticated ? children : null;
+  if (auth.status == 'loading') return <LinearProgress sx={{ mt: 4 }} />;
+  if(auth.status === 'authenticated') return <Outlet/> ;
+  
+  return null;
 };
