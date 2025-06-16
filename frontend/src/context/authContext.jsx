@@ -12,12 +12,10 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const verifyAuth = async () => {
       try {
-        await axios.get("/api/profile", {
-          withCredentials: true,
-        });
+        await axios.get("/api/profile");
         setAuth({ status: "authenticated", error: null });
       } catch (error) {
-        console.log(error.response.message)
+        console.log(error)
         if (error.response?.status === 401) {
           setAuth({ status: "unauthenticated", error: null });
         } else {

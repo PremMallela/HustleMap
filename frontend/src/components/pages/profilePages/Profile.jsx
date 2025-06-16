@@ -59,7 +59,7 @@ const Profile = () => {
 
     setIsSaving(true);
     try {
-      await axios.post("/api/profile/save", profileData, { withCredentials: true });
+      await axios.post("/api/profile/save", profileData);
       setTimeout(() => {
         setIsSaving(false);
         setIsEditing(false);
@@ -76,7 +76,7 @@ const Profile = () => {
 
   const handleDownloadPDF = async () => {
     try {
-      const { data } = await axios.get("/api/timeline", { withCredentials: true });
+      const { data } = await axios.get("/api/timeline");
       const timelineEvents = data.events || [];
       generateHustleReportPDF({
         profile: profileData,

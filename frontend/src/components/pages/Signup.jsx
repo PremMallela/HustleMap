@@ -44,9 +44,7 @@ const Signup = () => {
     try {
       await axios.post(
         "/api/users/register",
-        { name, email, password, githubUsername, leetcodeUsername },
-        { withCredentials: true }
-      );
+        { name, email, password, githubUsername, leetcodeUsername });
       navigate("/login");
     } catch (error) {
       setErrorMessage(`${error?.response?.data?.message || "Signup failed"}. Please try again.`);

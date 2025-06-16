@@ -126,7 +126,7 @@ const TimelineDisplay = () => {
   useEffect(() => {
     const fetchTimeline = async () => {
       try {
-        const { data } = await axios.get("/api/timeline", { withCredentials: true });
+        const { data } = await axios.get("/api/timeline");
         setEvents(data?.events || []);  
       } catch (error) {
         setError(error)

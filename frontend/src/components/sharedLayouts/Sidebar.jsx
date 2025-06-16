@@ -17,9 +17,7 @@ const Sidebar = () => {
 
   const handleLogout = async () => {
     try {
-       await axios.get("/api/users/logout", 
-            {withCredentials: true}
-        )
+       await axios.get("/api/users/logout")
         setLoading(false);
         setTimeout(( ) =>{
            navigate("/login");

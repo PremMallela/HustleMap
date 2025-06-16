@@ -23,7 +23,7 @@ import {
 import Logo from '../../../src/assets/hm-logo.avif'; 
 
 const colors = {
-  primary: '#4caf50', 
+  primary: '#129990', 
   primaryLight: '#80e27e',
   primaryDark: '#129990',
   secondary: '#26a69a', 
@@ -50,7 +50,7 @@ const LandingPage =()=> {
                 backgroundSize: '200% auto',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
-                WebkitTextStroke: '1px #258D52',
+                WebkitTextStroke: `1px ${colors.primary}`,
                 animation: 'shine 2.5s linear infinite',
                 letterSpacing: 0.5,
                 whiteSpace: 'nowrap',

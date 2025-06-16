@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "../../../utils/axiosInstance";
 import {
   Box,
   Avatar,

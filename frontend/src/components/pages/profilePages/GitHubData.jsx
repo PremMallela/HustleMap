@@ -5,7 +5,7 @@ import { useFetch } from "../../../utils/hooks/useFetch"
 const GitHubData = () => {
   const { data: githubData, error, loading } = useFetch("/api/profile/github");
 
-  if (loading) return <LinearProgress sx={{ mt: 4 }} />;
+  if (loading) return <LinearProgress sx={{ mt: 4 }} />; //this helps avoid render stale data
   if (error) return <Alert severity="error" sx={{ textAlign: "center" }}>{error}</Alert>;
 
   const { profile, repoNames, topLanguages } = githubData;

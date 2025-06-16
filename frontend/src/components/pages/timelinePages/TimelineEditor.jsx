@@ -55,9 +55,7 @@ const Timeline = () => {
   useEffect(() => {
     const fetchTimeline = async () => {
       try {
-        const response = await axios.get("/api/timeline", {
-          withCredentials: true
-        });
+        const response = await axios.get("/api/timeline");
         const data = response.data?.events || defaultTimeline;
         setTimelineEvents(data);
       } catch (error) {
@@ -106,9 +104,7 @@ const Timeline = () => {
     try {
       const response = await axios.post(
         "/api/timeline",
-        { events: timelineEvents },
-        { withCredentials: true }
-      );
+        { events: timelineEvents});
       console.log("Timeline saved successfully:", response.data);
       Navigate("/hustleTimeline/display");
     } catch (error) {

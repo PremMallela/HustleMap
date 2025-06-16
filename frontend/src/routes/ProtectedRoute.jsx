@@ -7,7 +7,10 @@ import { Outlet } from "react-router-dom";
 export const ProtectedRoute = () => {
   const {auth} = useAuthContext();
   const navigate = useNavigate();
-  console.log(auth)
+  useEffect(() => {
+  console.log("auth changed", auth);
+}, [auth]);
+
    useEffect(() => {
     if (auth.status === "unauthenticated") {
       navigate("/login");

@@ -89,12 +89,12 @@ const Login = () => {
               size="large"
               sx={{
                 backgroundColor: "#129990",
-                color: "#fff", // adjust for contrast
+                color: "#fff", 
                 borderRadius: "30px",
                 textTransform: "none",
                 py: 1.5,
                 '&:hover': {
-                  backgroundColor: "#e6e0d9" // slightly darker shade on hover
+                  backgroundColor: "#e6e0d9" 
                 }
               }}
               disabled={loading}
