@@ -1,5 +1,6 @@
 import { Link, useLocation ,useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useAuthContext } from "../../utils/hooks/useAuthContext";
 import { Avatar, Drawer, List, ListItemButton, ListItemIcon, ListItemText,Button, CircularProgress } from "@mui/material";
 import { Person, Code, GitHub, BarChart } from "@mui/icons-material";
 import axios from "../../utils/axiosInstance";
@@ -7,7 +8,8 @@ import axios from "../../utils/axiosInstance";
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const {verifyAuth} = useAuthContext();
   const menuItems = [
     { text: "Profile", path: "/profile", icon: <Person /> },
     { text: "LeetCode Data", path: "/profile/leetcode", icon: <Code /> },
@@ -16,10 +18,12 @@ const Sidebar = () => {
   ];
 
   const handleLogout = async () => {
+    setLoading(true);
     try {
        await axios.get("/api/users/logout")
-        setLoading(false);
-        setTimeout(( ) =>{
+        setTimeout(async( ) =>{
+          await verifyAuth();
+          setLoading(false);
            navigate("/login");
           }, 1500);
         
@@ -71,7 +75,7 @@ const Sidebar = () => {
         ))}
       </List>
               <Button variant="contained" onClick={handleLogout} sx={{ marginTop: "auto", marginBottom: 2,width :"80%", borderRadius: 2,backgroundColor: "#FFFBDE",color:"black" }}>
-                 {loading ? "logout": <CircularProgress size={24} color="inherit" />}
+                 {loading ? <CircularProgress size={24} color="inherit" />: "Logout"}
               </Button>
     </Drawer>
   );

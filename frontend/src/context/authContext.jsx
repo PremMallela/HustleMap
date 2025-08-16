@@ -9,26 +9,24 @@ export const AuthProvider = ({ children }) => {
     error: null,
   });
 
-  useEffect(() => {
-    const verifyAuth = async () => {
-      try {
-        await axios.get("/api/profile");
-        setAuth({ status: "authenticated", error: null });
-      } catch (error) {
-        console.log(error)
-        if (error.response?.status === 401) {
-          setAuth({ status: "unauthenticated", error: null });
-        } else {
-          setAuth({ status: "unauthenticated", error: error.message });
-        }
-      }
-    };
-
+  const verifyAuth = async () => {
+  try {
+    await axios.get("/api/profile", { withCredentials: true });
+    setAuth({ status: "authenticated", error: null });
+  } catch (error) {
+    if (error.response?.status === 401) {
+      setAuth({ status: "unauthenticated", error: "Unauthorized" });
+    } else {
+      setAuth({ status: "unauthenticated", error: error.message || "Unknown error" });
+    }
+  }
+};
+  useEffect(()=>{
     verifyAuth();
-  }, []);
+  },[])
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ auth, verifyAuth }}>
       {children}
     </AuthContext.Provider>
   );

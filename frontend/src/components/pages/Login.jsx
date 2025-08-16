@@ -1,36 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "../../utils/axiosInstance";
 import { TextField, Button, Typography, Box, CircularProgress, Paper } from "@mui/material";
+import { useAuthContext } from "../../utils/hooks/useAuthContext";
 
 const Login = () => {
   const [loginCredentials, setLoginCredentials] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const {auth,verifyAuth} = useAuthContext();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setLoginCredentials({ ...loginCredentials, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
     setLoading(true);
 
     try {
-      await axios.post("/api/users/login", loginCredentials, {
-        withCredentials: true,
-      });
-      setTimeout(()=> {
-        setLoading(false);
-        navigate("/profile")}, 1500)
+      await axios.post("/api/users/login", loginCredentials, { withCredentials: true });
+      await verifyAuth();
+      
     } catch (err) {
-      setLoading(false);
-      console.log(err)
-      setErrorMessage(`${err?.message}, Please try again` || "Login failed");
+       setLoading(false);
+      console.error("login error:", err);
+      setErrorMessage(err?.response?.data?.message || err?.message || "Login failed");
     }
   };
+    
+    useEffect(()=>{
+      if(auth.status==="authenticated") {
+        setTimeout(()=>{
+          setLoading(false);
+          navigate("/profile")
+        },1500)
+      }
+    },[auth.status])
 
   return (
     <div className="flex items-center justify-center min-h-screen ">
